@@ -54,24 +54,42 @@ const registerUser = async (req, res) => {
         .json({ success: false, message: "User already exist" });
     }
 
+    if (googleId) {
+      const existingUserByGoogleId = await User.findOne({ googleId });
+      if (existingUserByGoogleId) {
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: "User with this Google account already exists",
+          });
+      }
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    user = await User.create({
-      email: email,
+
+    const userData = {
+      email,
       password: hashedPassword,
-      mobile: mobile,
-      full_name: full_name,
-      address: address,
-      location: location,
-      googleId: googleId,
+      mobile,
+      full_name,
+      address,
+      location,
       isVerified: false,
-      otp: otp,
-      otpExpires: otpExpires,
-    });
+      otp,
+      otpExpires,
+    };
+
+    if (googleId) {
+      userData.googleId = googleId;
+    }
+
+    user = await User.create(userData);
 
     // Send Verification OTP
     const otpMailOptions = {
@@ -95,6 +113,11 @@ const registerUser = async (req, res) => {
         email: email,
       });
   } catch (error) {
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
     res.status(500).json({ success: false, err: error });
   }
 };
@@ -151,9 +174,8 @@ const loginUser = async (req, res) => {
         from: "Zelzec <abhayvijayan78@gmail.com>",
         to: user.email,
         subject: "Account Recovered - Zelzec",
-        text: `Hello ${
-          user.full_name
-        },\n\nYour account has been successfully recovered and the deletion request has been cancelled.\n\nTime of recovery: ${new Date().toLocaleString()}`,
+        text: `Hello ${user.full_name
+          },\n\nYour account has been successfully recovered and the deletion request has been cancelled.\n\nTime of recovery: ${new Date().toLocaleString()}`,
       };
       transporter.sendMail(restoreMailOptions, (err) => {
         if (err) console.error("Restore email error:", err);
@@ -167,9 +189,8 @@ const loginUser = async (req, res) => {
       from: "Zelzec <abhayvijayan78@gmail.com>",
       to: user.email,
       subject: "Zelzec Login Notification",
-      text: `Hello ${
-        user.full_name
-      },\n\nA login to your Zelzec account was detected on ${new Date().toLocaleString()}.`,
+      text: `Hello ${user.full_name
+        },\n\nA login to your Zelzec account was detected on ${new Date().toLocaleString()}.`,
     };
     transporter.sendMail(mailOptions, (err) => {
       if (err) console.error("Login email error:", err);
