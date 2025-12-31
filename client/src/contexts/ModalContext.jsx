@@ -42,7 +42,6 @@ export const ModalProvider = ({ children }) => {
             isVerifyEmailOpen,
             openVerifyEmail,
             closeVerifyEmail,
-            closeVerifyEmail,
             verificationEmail,
             isForgotPasswordOpen,
             openForgotPassword,

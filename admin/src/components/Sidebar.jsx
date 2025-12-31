@@ -7,6 +7,7 @@ import {
   Folder,
   Activity,
   Settings,
+  Bug,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -20,6 +21,7 @@ export default function Sidebar() {
     { name: "Products", icon: <Package size={20} />, path: "/dashboard/products" },
     { name: "Admins", icon: <UserCog size={20} />, path: "/dashboard/admins" },
     { name: "Categories", icon: <Folder size={20} />, path: "/dashboard/categories" },
+    { name: "Bug Reports", icon: <Bug size={20} />, path: "/dashboard/bugs" },
     { name: "Settings", icon: <Settings size={20} />, path: "/dashboard/settings" },
   ];
 

@@ -9,6 +9,7 @@ import NoPage from './pages/NoPage'
 import ManageCategories from './pages/ManageCategories'
 import ManageUsers from './pages/ManageUsers'
 import ManageProducts from './pages/ManageProducts'
+import BugReports from './pages/BugReports'
 import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
 import DashboardLayout from './components/DashboardLayout'
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='dashboard/categories' element={<ManageCategories />} />
             <Route path='dashboard/users' element={<ManageUsers />} />
             <Route path='dashboard/products' element={<ManageProducts />} />
+            <Route path='dashboard/bugs' element={<BugReports />} />
             <Route path='dashboard/settings' element={<Settings />} />
           </Route>
         </Route>
