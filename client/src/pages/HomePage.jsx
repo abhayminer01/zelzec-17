@@ -27,6 +27,7 @@ export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAllCategories, setShowAllCategories] = useState(false);
 
   const { openLogin, openVerifyEmail } = useModal();
   const { step, nextStep, clearStep } = useSell();
@@ -135,7 +136,9 @@ export default function HomePage() {
                 <div
                   onClick={() => handleCategoryClick(item._id)}
                   key={index}
-                  className="flex flex-col items-center justify-center border border-gray-300 rounded-lg py-6 md:py-4 hover:border-primary hover:text-primary transition-colors cursor-pointer bg-white"
+                  className={`flex flex-col items-center justify-center border border-gray-300 rounded-lg py-6 md:py-4 hover:border-primary hover:text-primary transition-colors cursor-pointer bg-white ${
+                    !showAllCategories && index >= 6 ? "hidden md:flex" : "flex"
+                  }`}
                 >
                   {Icon && (
                     <Icon
@@ -148,6 +151,26 @@ export default function HomePage() {
               );
             })}
           </div>
+
+          {/* Mobile Show More Button */}
+          {category.length > 6 && (
+            <div className="mt-6 md:hidden flex justify-center">
+              <button
+                onClick={() => setShowAllCategories(!showAllCategories)}
+                className="flex items-center gap-2 text-primary font-medium text-sm hover:underline"
+              >
+                {showAllCategories ? (
+                  <>
+                    Show Less <Icons.ChevronUp size={16} />
+                  </>
+                ) : (
+                  <>
+                    Show More <Icons.ChevronDown size={16} />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Gray Container for Product Lists */}
