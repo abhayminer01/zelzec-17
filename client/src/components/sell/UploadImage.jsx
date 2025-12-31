@@ -103,7 +103,7 @@ export default function UploadImage({ onNext }) {
         <div className="flex justify-center">
           <div
             onClick={() => fileInputRef.current.click()}
-            className={`border-2 rounded-3xl w-full md:w-60 aspect-square md:h-60 flex items-center justify-center cursor-pointer transition ${images.length >= 6
+            className={`border-2 rounded-3xl w-full md:w-60 aspect-square md:h-60 flex flex-col items-center justify-center cursor-pointer transition ${images.length >= 6
               ? "border-gray-300 cursor-not-allowed opacity-60"
               : "border-primary/40 hover:border-primary"
               }`}
@@ -111,6 +111,7 @@ export default function UploadImage({ onNext }) {
             <div className="bg-primary/20 rounded-2xl p-6 md:p-4">
               <Plus className="text-white size-12 md:size-16" strokeWidth={3} />
             </div>
+            <p className="text-xs text-gray-400 mt-2 font-medium">Note: JPG, PNG, WEBP</p>
             <input
               type="file"
               ref={fileInputRef}

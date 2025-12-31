@@ -200,7 +200,7 @@ export default function EditProductModal({ product, onClose, onUpdate }) {
 
         payload.append("existing_images", JSON.stringify(existingImages));
         newFiles.forEach(file => {
-            payload.append("images", file);
+            payload.append("images", file, file.name);
         });
 
         const res = await updateProduct(product._id, payload);
@@ -351,6 +351,7 @@ export default function EditProductModal({ product, onClose, onUpdate }) {
                     <div onClick={() => fileInputRef.current?.click()} className={`border-2 border-dashed rounded-3xl w-full max-w-[200px] aspect-square flex flex-col items-center justify-center cursor-pointer transition ${images.length >= 6 ? "border-gray-300 opacity-50 cursor-not-allowed" : "border-primary/40 hover:border-primary hover:bg-primary/5"}`}>
                         <div className="bg-primary/10 rounded-full p-4 mb-2"><Plus className="text-primary size-8" strokeWidth={3} /></div>
                         <span className="text-sm font-medium text-gray-600">Add Photo</span>
+                        <span className="text-[10px] text-gray-400 mt-1">JPG, PNG, WEBP</span>
                         <input type="file" ref={fileInputRef} multiple accept="image/*" onChange={handleFileChange} disabled={images.length >= 6} className="hidden" />
                     </div>
                 </div>

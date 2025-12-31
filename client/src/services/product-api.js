@@ -6,24 +6,28 @@ const api = axios.create({
 });
 
 export const createProduct = async (data) => {
-  const formData = new FormData();
+  try {
+    const formData = new FormData();
 
-  formData.append("category", data.category);
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("form_data", JSON.stringify(data.form_data));
-  formData.append("price", data.price);
-  formData.append("location", JSON.stringify(data.location));
+    formData.append("category", data.category);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("form_data", JSON.stringify(data.form_data));
+    formData.append("price", data.price);
+    formData.append("location", JSON.stringify(data.location));
 
-  data.images.forEach((img) => {
-    formData.append("images", img.file);
-  });
+    data.images.forEach((img) => {
+      formData.append("images", img.file, img.file.name);
+    });
 
-  const res = await api.post("/create", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+    const res = await api.post("/create", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-  return res.data;
+    return res.data;
+  } catch (error) {
+    return { success: false, message: error.response?.data?.message || error.message };
+  }
 };
 
 export const getAllProducts = async (params) => {

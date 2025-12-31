@@ -63,6 +63,30 @@ app.get("/uploads/:filename", (req, res) => {
   }
 });
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("Global Error:", err.stack);
+
+  if (err.message === "Only .jpeg, .jpg, .png and .webp format allowed!") {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({
+      success: false,
+      message: "File too large. Maximum size is 5MB."
+    });
+  }
+
+  res.status(500).json({
+    success: false,
+    message: err.message || "Internal Server Error"
+  });
+});
+
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server Running On Port : ${PORT}`);
