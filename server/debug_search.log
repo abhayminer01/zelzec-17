@@ -1,0 +1,60 @@
+
+[2025-12-28T14:07:20.734Z] Search: "eco sport"
+Query: {"page":"1","limit":"10","search":"eco sport","sort":"latest"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:21.007Z] Search: "eco sport"
+Query: {"page":"1","limit":"10","search":"eco sport","sort":"latest"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:24.243Z] Search: "s"
+Query: {"search":"s","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:24.771Z] Search: "su"
+Query: {"search":"su","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:25.162Z] Search: "suz"
+Query: {"search":"suz","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:26.413Z] Search: "suzuki"
+Query: {"search":"suzuki","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:28.203Z] Search: "suzuki "
+Query: {"search":"suzuki ","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:28.843Z] Search: "suzuki"
+Query: {"search":"suzuki","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:34.285Z] Search: "ec"
+Query: {"search":"ec","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:34.775Z] Search: "eco"
+Query: {"search":"eco","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:35.860Z] Search: "eco "
+Query: {"search":"eco ","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:36.588Z] Search: "eco s"
+Query: {"search":"eco s","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:37.205Z] Search: "eco spo"
+Query: {"search":"eco spo","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:37.668Z] Search: "eco sport"
+Query: {"search":"eco sport","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}
+
+[2025-12-28T14:07:38.411Z] Search: "eco spor"
+Query: {"search":"eco spor","limit":"5"}
+Sample Product Form Data: {"model":"EcoSport","brand":"Ford","fuel":"petrol","transmission":"manual"}

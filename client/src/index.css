@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-border: #E5E7EB;
+  --color-primary: #8069AE;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.primarybutton {
+  background: #8069AE;
+  border: 1px solid #8069AE;
+  padding: 0.5rem 1.25rem;
+  border-radius: 10px;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.primarybutton:hover {
+  background: white;
+  border: 1px solid #8069AE;
+  color: #8069AE;
+}
+
+.secondarybutton {
+  background: white;
+  border: 1px solid #8069AE;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: #8069AE;
+  transition: all 0.2s ease;
+  width: 100px;
+  /* fixed width */
+  max-width: 100%;
+  /* optional: prevents overflow on very small screens */
+  box-sizing: border-box;
+  /* ensures padding included in width */
+}
+
+.secondarybutton:hover {
+  background: #8069AE;
+  color: white;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
