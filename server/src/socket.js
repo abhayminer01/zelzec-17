@@ -5,11 +5,15 @@ const User = require("./models/user.model");
 let io;
 
 const initializeSocket = (server, sessionMiddleware) => {
-    io = new Server(server, {
+    const allowedOrigins = process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(',')
+        : ['http://localhost:5173', 'http://localhost:5174', 'https://zelzec.com', 'https://admin.zelzec.com'];
+
+    io = require('socket.io')(server, {
         cors: {
-            origin: ['http://localhost:5173', 'http://localhost:5174', 'https://zelzec.com', 'https://admin.zelzec.com'],
-            credentials: true,
-            methods: ["GET", "POST"]
+            origin: allowedOrigins,
+            methods: ["GET", "POST"],
+            credentials: true
         }
     });
 

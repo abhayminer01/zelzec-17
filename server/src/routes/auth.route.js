@@ -19,13 +19,13 @@ router.get('/google/callback', (req, res, next) => {
         if (err) { return next(err); }
 
         if (!user) {
-            return res.redirect('http://localhost:5173/login?error=auth_failed');
+            return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=auth_failed`);
         }
 
         req.logIn(user, (err) => {
             if (err) { return next(err); }
             req.session.user = { id: user._id }; // Set session for existing middleware compatibility
-            return res.redirect('http://localhost:5173/');
+            return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/`);
         });
     })(req, res, next);
 });

@@ -8,4 +8,15 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          utils: ['axios', 'date-fns'], // Example utils
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
 });

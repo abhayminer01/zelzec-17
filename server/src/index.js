@@ -5,7 +5,12 @@ const session = require('express-session');
 const connectDatabase = require('./configs/database');
 const path = require("path");
 const fs = require("fs");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const MongoStore = require('connect-mongo').default;
 
 const http = require('http');
 const { initializeSocket } = require('./socket');
@@ -13,21 +18,62 @@ const { initializeSocket } = require('./socket');
 const app = express();
 const server = http.createServer(app);
 
+// 1. Security Headers & Compression
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" } // Allow loading images from uploads
+}));
+app.use(compression());
+app.use(morgan('dev')); // Use 'common' or 'combined' in production
+
+// 2. Body Parser & Cookie Parser
 app.use(express.json());
 app.use(cookieParser());
+
+// 3. CORS Configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:5173', 'http://localhost:5174', 'https://zelzec.com', 'https://admin.zelzec.com'];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://zelzec.com', 'https://admin.zelzec.com'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
 }));
 
+// 4. Rate Limiting (DDoS Protection)
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Too many requests from this IP, please try again after 15 minutes"
+});
+
+// Apply rate limiting to all requests that start with /api
+app.use('/api/', apiLimiter);
+
+// 5. Session Management with MongoStore
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: 'sessions',
+    ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+  }),
   cookie: {
-    secure: false,
-    httpOnly: true
+    secure: process.env.NODE_ENV === 'production', // true in production
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 14 // 14 days
   }
 });
 
@@ -55,7 +101,11 @@ app.get("/uploads/:filename", (req, res) => {
   const filepath = path.join(__dirname, "../uploads", filename);
 
   if (fs.existsSync(filepath)) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    // Manually handle CORS for images if needed, though Helmet handles resource policy now
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.header("Access-Control-Allow-Origin", origin);
+    }
     res.header("Access-Control-Allow-Credentials", "true");
     res.sendFile(filepath);
   } else {

@@ -93,7 +93,7 @@ const registerUser = async (req, res) => {
 
     // Send Verification OTP
     const otpMailOptions = {
-      from: "Zelzec <abhayvijayan78@gmail.com>",
+      from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
       to: email,
       subject: "Verify your Email - Zelzec",
       text: `Your OTP for email verification is: ${otp}. It is valid for 10 minutes.`,
@@ -171,7 +171,7 @@ const loginUser = async (req, res) => {
 
       // Send Restoration Email
       const restoreMailOptions = {
-        from: "Zelzec <abhayvijayan78@gmail.com>",
+        from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
         to: user.email,
         subject: "Account Recovered - Zelzec",
         text: `Hello ${user.full_name
@@ -186,7 +186,7 @@ const loginUser = async (req, res) => {
 
     // 4. Send Login Notification
     const mailOptions = {
-      from: "Zelzec <abhayvijayan78@gmail.com>",
+      from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
       to: user.email,
       subject: "Zelzec Login Notification",
       text: `Hello ${user.full_name
@@ -290,7 +290,7 @@ const sendOtp = async (req, res) => {
     await user.save();
 
     const mailOptions = {
-      from: "Zelzec <abhayvijayan78@gmail.com>",
+      from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
       to: email,
       subject: "Password Reset OTP",
       text: `Your OTP for password reset is: ${otp}. It is valid for 10 minutes.`,
@@ -386,7 +386,7 @@ const deleteUser = async (req, res) => {
     // Send Deletion Scheduled Email
     if (user && user.email) {
       const deletionMailOptions = {
-        from: "Zelzec <abhayvijayan78@gmail.com>",
+        from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
         to: user.email,
         subject: "Account Deletion Scheduled - Zelzec",
         text: `Hello ${user.full_name},\n\nWe have received your request to delete your account. Your account has been disabled and will be permanently deleted in 15 days.\n\nIf you change your mind, you can recover your account by logging in within this 15-day period.`,
@@ -543,7 +543,7 @@ const resendVerificationOtp = async (req, res) => {
     await user.save();
 
     const mailOptions = {
-      from: "Zelzec <abhayvijayan78@gmail.com>",
+      from: `"${process.env.MAIL_FROM_NAME || 'Zelzec'}" <${process.env.MAIL_FROM_ADDRESS || process.env.EMAIL_USER}>`,
       to: email,
       subject: "Resend Verification OTP - Zelzec",
       text: `Your new OTP for email verification is: ${otp}. It is valid for 10 minutes.`,

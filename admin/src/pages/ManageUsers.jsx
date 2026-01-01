@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { format } from "date-fns";
 import { Search, Trash2, Edit, X } from "lucide-react";
 import Swal from "sweetalert2";
+import { getAllUsers, deleteUser, updateUser } from "../services/user-api";
 
 export default function ManageUsers() {
     const [users, setUsers] = useState([]);
@@ -37,12 +37,10 @@ export default function ManageUsers() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const res = await axios.get("http://localhost:5000/api/v1/admin/users", {
-                withCredentials: true,
-            });
-            if (res.data.success) {
-                setUsers(res.data.data);
-                setFilteredUsers(res.data.data);
+            const res = await getAllUsers();
+            if (res.success) {
+                setUsers(res.data);
+                setFilteredUsers(res.data);
             }
         } catch (error) {
             console.error(error);
@@ -65,10 +63,8 @@ export default function ManageUsers() {
 
         if (result.isConfirmed) {
             try {
-                const res = await axios.delete(`http://localhost:5000/api/v1/admin/users/${userId}`, {
-                    withCredentials: true
-                });
-                if (res.data.success) {
+                const res = await deleteUser(userId);
+                if (res.success) {
                     Swal.fire("Deleted!", "User has been deleted.", "success");
                     fetchUsers();
                 }
@@ -92,10 +88,8 @@ export default function ManageUsers() {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.put(`http://localhost:5000/api/v1/admin/users/${selectedUser._id}`, editFormData, {
-                withCredentials: true
-            });
-            if (res.data.success) {
+            const res = await updateUser(selectedUser._id, editFormData);
+            if (res.success) {
                 Swal.fire("Success", "User updated successfully", "success");
                 setIsEditOpen(false);
                 fetchUsers();
