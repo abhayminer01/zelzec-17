@@ -118,7 +118,7 @@ export default function HomePage() {
         <img
           src="images/image.png"
           className="w-full md:h-[400px] h-48 object-cover"
-          alt="Banner"
+          alt="ZelZec Marketplace - Buy and Sell Online"
         />
         {/* Overlay gradient if needed, or keeping plain as per image */}
       </div>
@@ -136,9 +136,8 @@ export default function HomePage() {
                 <div
                   onClick={() => handleCategoryClick(item._id)}
                   key={index}
-                  className={`flex flex-col items-center justify-center border border-gray-300 rounded-lg py-6 md:py-4 hover:border-primary hover:text-primary transition-colors cursor-pointer bg-white ${
-                    !showAllCategories && index >= 6 ? "hidden md:flex" : "flex"
-                  }`}
+                  className={`flex flex-col items-center justify-center border border-gray-300 rounded-lg py-6 md:py-4 hover:border-primary hover:text-primary transition-colors cursor-pointer bg-white ${!showAllCategories && index >= 6 ? "hidden md:flex" : "flex"
+                    }`}
                 >
                   {Icon && (
                     <Icon

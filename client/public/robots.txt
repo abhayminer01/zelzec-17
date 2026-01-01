@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /profile
+Disallow: /account
+Disallow: /myads
+Disallow: /favorites
+Sitemap: https://zelzec.com/sitemap.xml
